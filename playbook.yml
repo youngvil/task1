@@ -1,0 +1,53 @@
+---
+- name: Deploy two containers with proxy and webapp
+  hosts: prod_servers 
+  become: true
+
+  tasks:
+
+    - name: Instal Docker
+      ansible.builtin.apt:
+        name: 
+          - docker
+          - docker.io
+          - docker-compose
+          - docker-registry
+        state: latest
+        update_cache: true  
+
+    - name: Copy files for Nginx container image
+      copy: 
+        src: /home/youngv/task1/nginx 
+        dest: /tmp/containers 
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Copy files for web application container image
+      copy:
+        src: /home/youngv/task1/flask 
+        dest: /tmp/containers 
+        owner: root
+        group: root
+        mode: '0644' 
+
+    - name: pull Docker image of nginx
+      docker_image:
+        name: myproxy
+        source: build
+        build:
+          path: /tmp/containers/nginx/
+        state: present
+
+    - name: pull Docker image of flask
+      docker_image:
+        name: myapp
+        source: build
+        build:
+          path: /tmp/containers/flask/
+        state: present    
+ 
+    - name: run docker-compose to start containers 
+      docker_compose:
+        project_src: /tmp/containers/nginx
+        state: present

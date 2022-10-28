@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Greetings</title>
+</head>
+<body>
+<h1>Test taks #1</h1>
+<h2>Two docker container. 1st - with nginx proxy to 2nd - with WebApp which shows limits of container resources</h2>
+<h3>Limits</h3>
+
+{% for limit in limits %}
+<div>{{ limit.tag }}:&nbsp<i>{{ limit.text }}</i></div>
+{% endfor %}
+
+</body>
+</html>

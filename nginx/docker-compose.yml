@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  myproxy:
+    container_name: myproxy
+    image: myproxy:latest
+    
+  myapp:
+    container_name: myapp
+    depends_on:
+      - myproxy 
+    image: myapp:latest
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+    ports:
+      - 80:5000

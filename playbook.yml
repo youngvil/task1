@@ -17,7 +17,7 @@
 
     - name: Copy files for Nginx container image
       copy: 
-        src: /home/youngv/task1/nginx 
+        src: ./nginx 
         dest: /tmp/containers 
         owner: root
         group: root
@@ -25,7 +25,7 @@
 
     - name: Copy files for web application container image
       copy:
-        src: /home/youngv/task1/flask 
+        src: ./flask 
         dest: /tmp/containers 
         owner: root
         group: root
